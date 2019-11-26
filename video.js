@@ -15,3 +15,4 @@ $(function(){
     $(this).select();
   });
 });
+document.getElementById("video_player").setAttribute('autoplay', true);
