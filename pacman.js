@@ -7,6 +7,7 @@
  * fix what happens when a ghost is eaten (should go back to base)
  * do proper ghost mechanics (blinky/wimpy etc)
  */
+document.addEventListener('contextmenu', event => event.preventDefault());
 
 var NONE        = 4,
     UP          = 3,
