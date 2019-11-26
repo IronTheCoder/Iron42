@@ -1,391 +1,376 @@
-/*
-  Player Skin Designer for Video.js
-  http://videojs.com
+//SKIN COLORS
+//------------------------------------------------------
+$primary-foreground-color: #26A69A; // #fff default
 
-  To customize the player skin edit 
-  the CSS below. Click "details" 
-  below to add comments or questions.
-  This file uses some SCSS. Learn more  
-  at http://sass-lang.com/guide)
+$primary-background-color: #2B333F;  // #2B333F default
 
-  This designer can be linked to at:
-  https://codepen.io/heff/pen/EarCt/left/?editors=010
-html
-{
-  -webkit-tap-highlight-color:transparent;
-}
-*/
+//color for video progress indicator
+$progress-indicator-color: #fcfaff; //skin default #fff
 
-// The following are SCSS variables to automate some of the values.
-// But don't feel limited by them. Change/replace whatever you want. 
-// The color of icons, text, and the big play button border.
-// Try changing to #0f0
-$primary-foreground-color: #cacaca; // #fff default
-$secondary-foreground-color: #b7090b;
-// The default color of control backgrounds is mostly black but with a little
-// bit of blue so it can still be seen on all-black video frames, which are common.
-// Try changing to #900
-$primary-background-color: #262626; // #2B333F default
-// Try changing to true
-$center-big-play-button: true; // true default
-$big-play-button: false; // hide big play button
-$controls-margin: 2em;
+//color for mute/vol-0 icon
+$mute-icon-color: #fc444c;
+
+//color for time text
+$time-color: #fff; //skin default  #fff
+
+//color for big play button
+$center-big-play-button-color: $primary-foreground-color;
+$center-big-play-button-hover-color: #fff;
+
 // Make a slightly lighter version of the main background
 // for the slider background.
-$slider-bg-color: lighten($primary-background-color, 3%);
-$progress-position:-2.5em;
-@font-face {
-  font-family: nf-icon;
-  src: url(https://assets.nflxext.com/ffe/siteui/fonts/nf-icon-v1-86.eot);
-  src: url(https://assets.nflxext.com/ffe/siteui/fonts/nf-icon-v1-86.eot?#iefix) format('embedded-opentype'), url(https://assets.nflxext.com/ffe/siteui/fonts/nf-icon-v1-86.woff) format('woff'), url(https://assets.nflxext.com/ffe/siteui/fonts/nf-icon-v1-86.ttf) format('truetype'), url(https://assets.nflxext.com/ffe/siteui/fonts/nf-icon-v1-86.svg#nf-icon-v1-86) format('svg');
-  font-weight: 400;
-  font-style: normal
-}
-
-.video-js {
-  /* The base font size controls the size of everything, not just text.
-     All dimensions use em-based sizes so that the scale along with the font size.
-     Try increasing it to 15px and see what happens. */
-  font-size: 16px;
-  /* The main font color changes the ICON COLORS as well as the text */
-  color: $primary-foreground-color;
-}
+$slider-bg-color: lighten($primary-background-color, 33%);
 
 
-/* The "Big Play Button" is the play button that shows before the video plays.
-   To center it set the align values to center and middle. The typical location
-   of the button is the center, but there is trend towards moving it to a corner
-   where it gets out of the way of valuable content in the poster image.*/
-html
-{
-  -webkit-tap-highlight-color:transparent;
-}
-.vjs-default-skin .vjs-big-play-button {
-  /* The font size is what makes the big play button...big. 
-     All width/height values use ems, which are a multiple of the font size.
-     If the .video-js font-size is 10px, then 3em equals 30px.*/
-  font-size: 4em;
-  /* We're using SCSS vars here because the values are used in multiple places.
-     Now that font size is set, the following em values will be a multiple of the
-     new font size. If the font-size is 3em (30px), then setting any of
-     the following values to 3em would equal 30px. 3 * font-size. */
-  $big-play-width: 1.5em;
-  /* 1.5em = 45px default */
-  $big-play-height: 1.5em;
-  line-height: $big-play-height;
-  height: $big-play-height;
-  width: $big-play-width;
-  /* 0.06666em = 2px default */
-  border: 0.06666em solid $secondary-foreground-color;
-  /* 0.3em = 9px default */
-  border-radius: 50%;
-  @if $big-play-button {
-    display: block;
-  }
-  @else {
-    display: none;
-  }
-  @if $center-big-play-button {
-    /* Align center */
-    left: 50%;
-    top: 40%;
-    margin-left: -($big-play-width / 2);
-    margin-top: -($big-play-height / 2);
-  }
-  @else {
-    /* Align top left. 0.5em = 15px default */
-    left: 0.5em;
-    top: 0.5em;
-  }
+//SKIN SIZE SETTINGS
+//----------------------------
+//Video control container
+$video-container-height: 4em;
+
+//Video progress bar
+$progress-bar-height: .5em;
+$progress-bar-indicator: $progress-bar-height * 2;
+//When user is inactive progress bar move to bottom of the player
+$show-progress-bar: true; //skin default true
+
+//Play button size
+//align center play button
+$center-play-button: true;
+$play-button-size: $video-container-height / 1.4;
+
+//All controls size
+$control-buttons-size: $video-container-height - 1;
+
+//Big play button
+$center-big-play-button: true; // true default
+/* 1.5em = 45px default */
+$big-play-size: 6em;
+$big-play-width: 1em;
+$big-play-height: 1em;
+
+//SPECIAL CONDITION
+@if $video-container-height < 3 {
+    $play-button-size: $video-container-height;
+    $control-buttons-size: $video-container-height ;
 }
 
-.video-js .vjs-play-control,
-.video-js .vjs-remaining-time,
-.video-js .vjs-volume-menu-button {
-  border-right: 1px solid #323232;
+/*THEME ICONS
+------------------------------------------------------------------------------------------------*/
+.vjs-polyzor-skin .vjs-icon-play, .video-js .vjs-big-play-button, .video-js .vjs-play-control {
+    font-family: VideoJS;
+    font-weight: normal;
+    font-style: normal; }
+.vjs-polyzor-skin .vjs-icon-play:before, .video-js .vjs-big-play-button:before, .video-js .vjs-play-control:before {
+    content: ""; }
+
+.vjs-polyzor-skin {
+    font-size: 10px;
+    /* The main font color changes the ICON COLORS as well as the text */
+    color: $primary-foreground-color;
+
+    .vjs-control-bar,
+    .vjs-big-play-button,
+    .vjs-menu-button .vjs-menu-content {
+        /* IE8 - has no alpha support */
+        background-color: $primary-background-color;
+        /* Opacity: 1.0 = 100%, 0.0 = 0% */
+        background-color: rgba($primary-background-color, 0.7);
+    }
 }
 
-.video-js .vjs-volume-menu-button {
-  .vjs-menu-content {
+
+//Big play button
+//--------------------------------------------
+.vjs-polyzor-skin .vjs-big-play-button {
+    font-size: $big-play-size;
+    line-height: 1;
+    height: $big-play-height;
+    width: $big-play-width;
+    color: $center-big-play-button-color;
+    background: none !important;
+    border: 0;
+    transition: all .3s ease !important;
+
+    &:hover {
+        color: $center-big-play-button-hover-color;
+        transform:scale(1.5);
+    }
+
+    @if $center-big-play-button {
+        /* Align center */
+        left: 50%;
+        top: 50%;
+        margin-left: -($big-play-width / 2);
+        margin-top: -($big-play-height / 2);
+    } @else {
+        /* Align top left. 0.5em = 15px default */
+        left: 0.5em;
+        top: 0.5em;
+    }
+}
+
+
+//VIDEO CONTROL
+//--------------------------------------------
+//Video control bar
+.vjs-polyzor-skin .vjs-control-bar {
+    padding: 0 5px;
+    height: $video-container-height !important;
+    align-items: center;
+
+}
+
+//Progress bar
+.vjs-polyzor-skin .vjs-progress-control {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0 !important;
+    width: 100% !important;
+    height: auto !important; //defined by $progress-bar-height
+    transform:translate(0, -100%);
+}
+//Progress indicator
+.vjs-polyzor-skin .vjs-progress-holder {
+    height: $progress-bar-height !important;
+    margin: 0;
+
+    .vjs-load-progress, .vjs-play-progress {
+        transition: width 400ms ease;
+        height: 100% !important;
+    }
+
+    .vjs-play-progress:before {
+        font-size: $progress-bar-indicator;
+        color: $progress-indicator-color;
+        top: -55%;
+    }
+}
+//progress indicator state when user is inactive "change this in settings - $show-progress-bar with true or false "
+.vjs-polyzor-skin.vjs-has-started.vjs-user-inactive.vjs-playing .vjs-control-bar {
+    @if $show-progress-bar {
+        visibility: visible;
+        opacity: 1;
+        background: none;
+        transition: all 1s;
+
+        .vjs-control, .vjs-time-control {
+            visibility: hidden;
+            opacity: 0;
+            transition: all 1s;
+        }
+        .vjs-progress-control {
+            visibility: visible;
+            opacity: 1;
+            top: 100%;
+            transition: all .8s !important;
+            transform: translate(0,-100%);
+
+            .vjs-play-progress.vjs-slider-bar {
+                &:before {
+                    content: '';
+                }
+            }
+        }
+    } @else {
+
+    }
+}
+
+//BUTTONS
+//-------------------------------------------
+//general button settings
+.vjs-polyzor-skin .vjs-control {
+    height: auto;
+    width: auto;
+    padding: 0 5px;
+
     &:before {
-      content: "";
-      display: inline-block;
-      vertical-align: middle;
-      height: 100%;
+        font-size: $control-buttons-size;
+        line-height: 1 !important;
     }
-    .vjs-volume-bar {
-      display: inline-block;
-      vertical-align: middle;
-    }
-  }
+}
+.vjs-polyzor-skin .vjs-control:before {
+    line-height:1;
+    position: relative;
+}
+
+.video-js .vjs-control:focus:before,
+.video-js .vjs-control:hover:before,
+.video-js .vjs-control:focus {
+    text-shadow: 0 0 1em $primary-foreground-color ;
 }
 
 
-/* The default color of control backgrounds is mostly black but with a little
-   bit of blue so it can still be seen on all-black video frames, which are common. */
+//Play button
+.vjs-polyzor-skin .vjs-play-control {
+    @if $center-play-button {
+        //Align center of bar
+        position: absolute;
+        width: auto;
+        height: 100%;
+        top: 50%;
+        left: 50%;
+        transition: 300ms;
+        transform: translate(-50%, -50%);
+    } @else {
+        display: block;
+        position: relative;
+        top: 0;
+        transform: translate(0, 0);
+        margin-right: 5px;
+        /* order:1; */
+    }
 
-.video-js .vjs-control {
-  &:before {
-    font-family: nf-icon;
-  }
-  &.vjs-play-control {
     &:before {
-      content: '\e646';
+        position: relative;
+        line-height: 1 !important;
+        font-size: 25px; //for IE
+        font-size: $play-button-size !important;
     }
-    &.vjs-playing {
-      &:before {
-        content: '\e645';
-      }
-    }
-  }
-  &.vjs-fullscreen-control {
+}
+
+//Volume button & menu
+.vjs-polyzor-skin .vjs-volume-menu-button {
+    position: relative;
+    height: $control-buttons-size - .7;
+    width: $control-buttons-size - .7;
+    overflow:hidden;
+
     &:before {
-      content: '\e642';
+        text-align: left;
+        font-size: $control-buttons-size - .7 !important;
+        position: absolute;
+        top: 50%;
+        transform: translate(0, -50%);
+        text-shadow: none !important ;
     }
-  }
-  &.vjs-volume-menu-button {
+
+    .vjs-menu {
+        position: relative;
+        width: 100%;
+        left: $control-buttons-size / 1.5;
+    }
+    .vjs-menu-content {
+        position: absolute;
+        height: $control-buttons-size - .7;
+        padding: 0 5px !important;
+
+
+        .vjs-volume-bar {
+            margin: 0 !important;
+            top:50%;
+            transform: translate(0, -50%);
+        }
+    }
+}
+.vjs-polyzor-skin .vjs-volume-level { //volume level indicator
+    color: $progress-indicator-color;
+}
+.vjs-polyzor-skin .vjs-vol-0 { //volume mute icon
+    color:$mute-icon-color;
+}
+
+//Time
+.vjs-polyzor-skin .vjs-remaining-time {
+    margin-right:auto;
+}
+.vjs-polyzor-skin .vjs-time-control {
+    color: $time-color;
+}
+
+//Live control
+.vjs-polyzor-skin .vjs-live-control {
+    position: absolute;
+    width: auto;
+    line-height: 1;
+    height: auto;
+    top:-30px;
+    right: 0;
+
     &:before {
-      content: '\e630';
+        content: '';
+        display: block;
+        width: 10px;
+        height: 10px;
+        position: absolute;
+        left: 0;
+        top: 50%;
+        background: red;
+        border-radius: 100%;
+        transform: translate(-100%, -50%);
     }
-  }
-  &.vjs-captions-button {
-    &:before {
-      content: '\e650';
+}
+
+//Playback Rate button
+.vjs-polyzor-skin .vjs-playback-rate {
+    /*TODO: fix playback height*/
+}
+
+//Divider between time
+.vjs-current-time, .vjs-time-divider {
+    display: block !important;
+}
+
+//Cursor time indicator
+.vjs-polyzor-skin .vjs-progress-control {
+
+    &:hover{
+        .vjs-mouse-display:after {
+            background: rgba( $primary-foreground-color, .7);
+        }
     }
-  }
+
 }
-
-.video-js .vjs-control-bar,
-.video-js .vjs-big-play-button,
-.video-js .vjs-menu-button .vjs-menu-content {
-  /* IE8 - has no alpha support */
-  background-color: $primary-background-color;
-  /* Opacity: 1.0 = 100%, 0.0 = 0% */
-  background-color: rgba($primary-background-color, 0.9);
-}
-
-.video-js .vjs-control-bar {
-  background-color: rgba($primary-background-color, 0.9);
-  width: auto;
-  left: $controls-margin * 2;
-  right: $controls-margin * 2;
-  bottom: $controls-margin;
-  border-radius: 0.5em;
-  &:hover {
-    .vjs-progress-control {
-      opacity: 1;
-      top: $progress-position;
-    }
-  }
-  
-  .vjs-menu{
-    z-index: 2;
-    height: 100%;
-  }
-}
-
-.video-js.vjs-fullscreen {
-  .vjs-control-bar {
-     bottom: $controls-margin * 2;
-  }
-}
-
-.video-js .vjs-current-time {
-  display: block;
-  position: absolute;
-  right: 0;
-  top: $progress-position;
-}
-
-
-/* Slider - used for Volume bar and Progress bar */
-
-.video-js .vjs-slider {
-  background-color: $slider-bg-color;
-  background-color: rgba($slider-bg-color, 0.8);
-  border-radius: 1em;
-  margin: 0;
-}
-
-.video-js .vjs-remaining-time {
-  flex: 1;
-  text-align: left;
-}
-
 
 /* The slider bar color is used for the progress bar and the volume bar
    (the first two can be removed after a fix that's coming) */
-
 .video-js .vjs-volume-level,
 .video-js .vjs-play-progress,
 .video-js .vjs-slider-bar {
-  background: $primary-foreground-color;
-  border-radius: 1em;
-}
-
-.video-js .vjs-play-progress {
-  color: $secondary-foreground-color;
-  background: $secondary-foreground-color;
-  font-size: 1.3em;
-  &:before {
-    transition: width .1s ease-out, height .1s ease-out;
-    content: "";
-    top: -0.2em;
-    border: 0;
-    background: radial-gradient(#b7090b 33%, #830607);
-    width: 1em;
-    height: 1em;
-    border-radius: 50%;
-    box-shadow: #000 0 0 2px;
-  }
-  &:hover {
-    &:before {
-      width: 1.1em;
-      height: 1.1em;
-      border: 2px solid transparent;
-    }
-  }
-}
-
-.video-js .vjs-progress-control {
-  position: absolute;
-  left: 0;
-  right: 0;
-  width: 100%;
-  padding: 0 4em 0 0.4em;
- 
-  top: $progress-position + 0.2em;
-  border-radius: 1em;
-  transition: top 150ms linear, opacity 150ms linear, transform 150ms linear, -webkit-transform 150ms linear, -moz-transform 150ms linear, -o-transform 150ms linear;
-  z-index: 1;
-  opacity: 0;
-  &:hover {
-    .vjs-progress-holder {
-      font-size: inherit;
-    }
-  }
-  .vjs-mouse-display {
     background: $primary-foreground-color;
-    &:before {
-      top: 100%;
-      border: solid transparent;
-      content: " ";
-      height: 0;
-      width: 0;
-      position: absolute;
-      border-top-color: #262626;
-      border-width: .8em;
-      right: 25%;
-      margin-left: -.8em;
-    }
-  }
 }
-
-.video-js .vjs-time-tooltip {
-  background: $primary-foreground-color !important;
-  color: $secondary-foreground-color;
-  &:before {
-    top: 100%;
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
-    position: absolute;
-    border-top-color: #262626;
-    border-width: .8em;
-    right: 25%;
-    margin-left: -.8em;
-  }
-}
-
-.video-js .vjs-play-progress,
-.video-js .vjs-load-progress {
-  height: 0.7em !important;
-}
-
-.video-js .vjs-progress-holder {
-  height: 0.9em;
-}
-
 
 /* The main progress bar also has a bar that shows how much has been loaded. */
-
 .video-js .vjs-load-progress {
-  /* For IE8 we'll lighten the color */
-  background: lighten($slider-bg-color, 5%);
-  /* Otherwise we'll rely on stacked opacities */
-  background: rgba($slider-bg-color, 0.5);
-  //box-shadow: 0 0.2em 0.1em 0 #000;
-  border-radius: 1em;
-  height: 0.9em !important;
+    /* For IE8 we'll lighten the color */
+    background: lighten($slider-bg-color, 25%);
+    /* Otherwise we'll rely on stacked opacities */
+    background: rgba($slider-bg-color, 0.5);
 }
-
 
 /* The load progress bar also has internal divs that represent
    smaller disconnected loaded time ranges */
-
 .video-js .vjs-load-progress div {
-  /* For IE8 we'll lighten the color */
-  background: lighten($slider-bg-color, 5%);
-  /* Otherwise we'll rely on stacked opacities */
-  background: rgba($slider-bg-color, 0.75);
-  border-radius: 1em;
-  height: 0.9em !important;
+    /* For IE8 we'll lighten the color */
+    background: lighten($slider-bg-color, 50%);
+    /* Otherwise we'll rely on stacked opacities */
+    background: rgba($slider-bg-color, 0.75);
 }
 
-.vjs-loading-spinner {
-  border: none;
-  opacity: 0;
-  visibility: hidden;
-  animation: vjs-spinner-fade-out 2s linear 1;
-  animation-delay: 2s;
-  &:before,
-  &:after {
-    border: none;
-  }
-  &:after {
-    background-image: url(https://assets.nflxext.com/en_us/pages/wiplayer/site-spinner.png);
-    background-repeat: no-repeat;
-    background-position-x: 50%;
-    background-position-y: 50%;
-    -moz-background-size: 100%;
-    -o-background-size: 100%;
-    background-size: 100%;
-  }
+//======================
+// MOBILE SCREENS
+//======================
+@media screen and (max-width: 400px) {
+    //BUTTONS
+        //Play
+    .vjs-polyzor-skin .vjs-play-control {
+        display: inline-block;
+        position: relative;
+        height: 100%;
+        top: 0 !important;
+        left:0 !important;
+        transform: translate(0, 0) !important;
+        margin-right: 5px;
+
+        &:before {
+            position: relative;
+            line-height: 1 !important;
+            font-size: $play-button-size !important;
+
+        }
+    }
 }
 
-.vjs-seeking .vjs-loading-spinner:after,
-.vjs-waiting .vjs-loading-spinner:after {
-  animation: vjs-spinner-spin 1.1s linear infinite, vjs-spinner-fade 1.1s linear 1 !important;
-  animation-delay: 2s;
-}
 
-.vjs-seeking .vjs-loading-spinner,
-.vjs-waiting .vjs-loading-spinner {
-  opacity: 1;
-  visibility: visible;
-  animation: vjs-spinner-fade-in 2s linear 1;
-  animation-delay: 2s;
-}
-
-@keyframes vjs-spinner-fade-in {
-  0% {
-    opacity: 0;
-    visibility: visible;
-  }
-  100% {
-    opacity: 1;
-    visibility: visible;
-  }
-}
-
-@keyframes vjs-spinner-fade-out {
-  0% {
-    opacity: 1;
-    visibility: visible;
-  }
-  100% {
-    opacity: 0;
-    visibility: visible;
-  }
-}
