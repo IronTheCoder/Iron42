@@ -19,7 +19,64 @@ function clearText(field){
 
 </head>
 <body>
+<head>
+  <!-- Chang URLs to wherever Video.js files will be hosted -->
+  <link href="https://ironthecoder.github.io/Iron42/video.css" rel="stylesheet" type="text/css">
+  <!-- video.js must be in the <head> for older IEs to work. -->
+  <script src="https://ironthecoder.github.io/Iron42/video.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="//vjs.zencdn.net/5.4.6/video.min.js"></script>
+  <link href="//vjs.zencdn.net/5.4.6/video-js.min.css" rel="stylesheet">
+</head>
+<div id="instructions">
+<div id='background'>
+  <div id='center'></div>
+<div class="task" data-id="1">
+  <video id="my_video_1" class="video-js vjs-default-skin" width="640px" height="267px" data-setup ='{}'
+      controls preload="none" 
+      data-setup='{ "aspectRatio":"640:267", "playbackRates": [1, 1.5, 2] }'>
+        <source src="https://ironthecoder.github.io/Iron42/compro.mp4" type='video/mp4' />
+</div>
+  </video>
+  </div>
+  <style>
+  #background{
+  display:flex;
+  position:fixed;
+  width:100vw;
+  left:0px;
+  height:100vh;
+  top:0px;
+}
 
+#center{
+  margin:auto;
+}
+
+
+</style>
+<script>
+var video = document.getElementById("my_video_1");
+video.autoplay = true;
+video.load(); 
+</script>
+<body>
+
+        <li >
+          <div class="task__content">
+            Build An App
+          </div>
+          
+  <nav id="context-menu" class="context-menu">
+    <ul class="context-menu__items">
+      <li class="context-menu__item">
+        <a href="#" class="context-menu__link" data-action="View"><i class="fa fa-eye"></i> IronTheCoder Video Player v5</a>
+      </li>
+      
+      </li>
+    </ul>
+  </nav>
+</body>
 <div id="tooplate_body_wrapper">
 	<div id="tooplate_wrapper">
     	
