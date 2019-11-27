@@ -85,3 +85,178 @@ h2 {
     <a href="#" class="button">Thanks!</a>
   </div>
 </div>
+<script>
+  class Helpers
+  s: 1
+  rand: (min, max) ->
+    Math.floor (Math.random() * ((max + 1) - min)) + min
+
+  time: (time) ->
+    time * @s
+
+  isFF: ->
+    navigator.userAgent.search("Firefox") > -1
+
+  isIE9: ->
+    navigator.userAgent.search("MSIE 9.0") > -1
+
+  isSafari: ->
+    ua = undefined
+    ua = navigator.userAgent.toLowerCase()
+    if ua.indexOf("safari") isnt -1
+      if ua.indexOf("chrome") > -1
+        false
+      else
+        true
+
+  isIOS: ->
+    navigator.userAgent.match /(iPad|iPhone|iPod touch);.*CPU.*OS 7_\d/i
+
+  elasticOut: (k) ->
+    a = 0.1
+    p = 0.4
+    return 0 if k is 0
+    return 1 if k is 1
+    if not a or a < 1
+      a = 1
+      s = p / 4
+    else
+      s = p * Math.asin(1 / a) / (2 * Math.PI)
+    a * Math.pow(2, -10 * k) * Math.sin((k - s) * (2 * Math.PI) / p) + 1
+      
+h = new Helpers()
+ 
+class Card
+  constructor: (o) ->
+    @o = o ? {}
+    @vars()
+    @run()
+    
+  vars: ->
+    @delay = @o.delay or 0
+    @s = 1 * h.time(1)
+    @card = $ '.award-container'
+    
+  run: ->
+    @card.css {
+      'transform-origin': 'center center'
+    }
+    .velocity {
+      opacity: [1, 0],
+      rotateY: [0, 85]
+    }, {
+      duration: 3000 * @s
+      easing: 'easeOutCube'
+    }
+    .velocity {
+      translateZ: [-60, 0]
+    }, {
+      delay: 400 * @s
+      duration: 30
+    }
+    .velocity {
+      translateZ: 0
+    }, {
+      duration: 400 * @s,
+      easing: 'easeOutElastic'
+    }
+  out: ->
+    @card.css {
+      'transform-origin': '10px 10px'
+    }
+    .velocity {
+      rotateZ: [20, 0]
+    }, {
+      duration: 700 * @s
+      easing: 'easeOutBack'
+    }
+    .velocity {
+      translateY: [500, 0]
+      translateX: [150, 0]
+    }, {
+      duration: 700 * @s,
+      easing: 'easeInExpo'
+      display: 'none'
+    }
+  
+class Badge
+  constructor: (o) ->
+    @o = o ? {}
+    @vars()
+    @run()
+    
+  vars: ->
+    @delay = @o.delay or {}
+    @s = 1 * h.time(1)
+    @badge = $ '.badge-container'
+    @starburstContainer = $ '.starbusrt-container'
+    @starburst = $ '.starbusrt-container > img'
+    
+  run: ->
+    impactVelocity = 100
+    θ = h.rand(0, 2*Math.PI)
+    @badge.velocity({
+      translateZ: [0, 400]
+      translateY: [0, -40]
+      rotateX: [0,80]
+      opacity: [1,0]
+    } ,{
+      duration: 3400 * @s
+      easing: 'easeInCirc'
+    }).velocity({
+      translateX: [0, 500]
+    }, {
+      duration: 3000 * @s
+      queue: false
+    }).velocity({
+      ###translateX: (impactVelocity * Math.cos(θ))
+      translateY: (impactVelocity * Math.sin(θ))###
+      translateZ: -impactVelocity
+    }, {
+      duration: 30 * @s
+    }).velocity({
+      ###translateX: (impactVelocity * Math.cos(θ-Math.PI))
+      translateY: (impactVelocity * Math.sin(θ-Math.PI))###
+      translateZ: impactVelocity
+    }, {
+      duration: 30 * @s
+    }).velocity({
+      translateZ: 0
+    }, {
+      duration: 400 * @s
+      easing: 'easeOutElastic'
+    })
+    @starburstContainer.velocity({
+      scale: [1, 0]
+      opacity: [1, 0]
+    }, {
+      display: 'inline-block'
+      duration: 600 * @s
+      delay: 3400 * @s
+      easing: 'easeOutElastic'
+    })
+    @rotateStar()
+
+  rotateStar: ->
+    @starburst.velocity({
+      rotateZ: [30, 0];
+    }, {
+      duration: 2000 * @s
+      easing: 'linear'
+      complete: =>
+        @rotateStar()
+    })
+  
+class AwardAnimation
+  constructor: ->
+    @card = new Card({delay: 0})
+    @badge = new Badge({delay: 0})
+    
+  out: ->
+    @card.out()
+    
+jQuery(document).ready ->
+  aa = new AwardAnimation()
+  $('.award-container').click ->
+    aa.out()
+</script>
